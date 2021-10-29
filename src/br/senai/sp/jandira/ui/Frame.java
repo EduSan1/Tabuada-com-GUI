@@ -5,13 +5,15 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import br.senai.sp.jandira.conta.Multiplicar;
+import br.senai.sp.jandira.conta.Tabuada;
 
 public class Frame {
 
@@ -32,6 +34,13 @@ public class Frame {
 		lblTitulo.setBounds(25, 20, 200, 35);
 		lblTitulo.setFont(new Font("Serif", 3, 25));
 		lblTitulo.setForeground(dourado);
+		
+		JLabel lblCalculadora = new JLabel();
+		lblCalculadora.setBounds(450, 20, 32, 32);
+		
+		ImageIcon imgCalculadora = new ImageIcon(getClass().getResource("../img/calculadora.png"));
+		lblCalculadora.setIcon(imgCalculadora);
+		
 
 		JLabel lblMultiplicando = new JLabel();
 		lblMultiplicando.setText("Multiplicando:");
@@ -100,12 +109,14 @@ public class Frame {
 
 				double multiplicando = Double.valueOf(txtMultiplicando.getText());
 				double multiplicador = Double.valueOf(txtMultiplicador.getText());
-				Multiplicar resultado = new Multiplicar();
+				Tabuada tabuada = new Tabuada();
+				
+				tabuada.setMultiplicador(txtMultiplicador.getText());
 
 				for (int contador = 1; contador <= multiplicador; contador++) {
 
-					resultado.tabuada(multiplicando, contador);
-					String conta = String.valueOf(resultado.getResultado());
+					tabuada.calcular(multiplicando, contador);
+					String conta = String.valueOf(tabuada.getResultado());
 					modelListContas.addElement(multiplicando + " x " + contador + " = " + conta);
 
 				}
@@ -125,7 +136,9 @@ public class Frame {
 			}
 		});
 
+		
 		frame.getContentPane().setBackground(cinzaEscuro);
+		frame.getContentPane().add(lblCalculadora);
 		frame.getContentPane().add(scrollPane);
 		frame.getContentPane().add(btnApagar);
 		frame.getContentPane().add(btnCalcular);
